@@ -68,25 +68,4 @@ namespace NerdStore.Catalogo.Domain
             AssertionConcern.ValidarSeVazio(Imagem, "O campo Imagem do produto não pode estar vazio");
         }
     }
-
-    public class Categoria : Entity
-    {
-        public string Nome { get; private set; }
-        public int Codigo { get; private set; }
-
-        public Categoria(string nome, int codigo)
-        {
-            Nome = nome;
-            Codigo = codigo;
-        }
-
-        /// <summary>
-        /// Retorna o nome da categoria e o código dela
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return $"{Nome} - {Codigo}";
-        }
-    }
 }
