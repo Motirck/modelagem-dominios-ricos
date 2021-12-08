@@ -22,6 +22,12 @@
 
             produto.DebitarEstoque(quantidade);
 
+            // TODO: Parametrizar a quantidade de estoque abaixo (em um arquivo separado, etc)
+            if (produto.QuantidadeEstoque < 10)
+            {
+
+            }
+
             _produtoRepository.Atualizar(produto);
             return await _produtoRepository.UnitOfWork.Commit();
         }
