@@ -11,10 +11,10 @@ namespace NerdStore.Catalogo.Application.Dtos
         public Guid CategoriaId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string? Nome { get; set; }
+        public string Nome { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string? Descricao { get; set; }
+        public string Descricao { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public bool Ativo { get; set; }
