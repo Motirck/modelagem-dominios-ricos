@@ -11,15 +11,14 @@ namespace NerdStore.Catalogo.Data
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
 
-        /// <summary>
-        /// O foreach abaixo pega todas as entidades mapeadas, verifica quais as propriedades são
-        /// do tipo "string" e mapear automaticamente o tipo da coluna como "varchar(100)" caso
-        /// a coluna já não tenha uma especificação diferente. Isso por motivos de segurança, impedindo
-        /// a criação de uma coluna como "NVARCHAR(MAX)"
-        /// </summary>
-        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /// <summary>
+            /// O foreach abaixo pega todas as entidades mapeadas, verifica quais as propriedades são
+            /// do tipo "string" e mapear automaticamente o tipo da coluna como "varchar(100)" caso
+            /// a coluna já não tenha uma especificação diferente. Isso por motivos de segurança, impedindo
+            /// a criação de uma coluna como "NVARCHAR(MAX)"
+            /// </summary>
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
             {
