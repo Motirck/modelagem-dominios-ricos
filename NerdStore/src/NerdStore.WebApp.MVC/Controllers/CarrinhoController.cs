@@ -23,7 +23,7 @@ namespace NerdStore.WebApp.MVC.Controllers
         [Route("meu-carrinho")]
         public async Task<IActionResult> Index()
         {
-            return null;
+            return View();
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace NerdStore.WebApp.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            TempData["Erros"] = "Produto Indisponível";
+            TempData["Erros"] = ObterMensagensErro();
             return RedirectToAction("ProdutoDetalhe", "Vitrine", new { id });
         }
 
