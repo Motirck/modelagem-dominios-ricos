@@ -1,6 +1,7 @@
 ﻿using NerdStore.Core.Messages;
+using NerdStore.Core.Messages.CommonMessages.Notifications;
 
-namespace NerdStore.Core.Mediator
+namespace NerdStore.Core.Communication.Mediator
 {
     public interface IMediatorHandler
     {
@@ -19,5 +20,14 @@ namespace NerdStore.Core.Mediator
         /// <param name="comando"></param>
         /// <returns></returns>
         Task<bool> EnviarComando<T>(T comando) where T : Command;
+        
+        /// <summary>
+        /// O evento genérico "T" precisa ser filho de "DomainNotification"
+        /// </summary>
+        /// <param name="notificacao"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification;
+
     }
 }
