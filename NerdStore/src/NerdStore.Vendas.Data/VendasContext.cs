@@ -5,16 +5,18 @@ using NerdStore.Vendas.Domain;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using NerdStore.Core.Communication.Mediator;
 
 namespace NerdStore.Vendas.Data
 {
     public class VendasContext : DbContext, IUnitOfWork
     {
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public VendasContext(DbContextOptions<VendasContext> options)
+        public VendasContext(DbContextOptions<VendasContext> options, IMediatorHandler mediatorHandler)
             : base(options)
         {
-
+            _mediatorHandler = mediatorHandler;
         }
 
         public DbSet<Pedido> Pedidos { get; set; }
@@ -36,6 +38,9 @@ namespace NerdStore.Vendas.Data
                     entry.Property("DataCadastro").IsModified = false;
                 }
             }
+
+            /// O this abaixo é o VendasContext
+            await _mediatorHandler.PublicarEventos(this);
             
             return await base.SaveChangesAsync() > 0;
         }
@@ -54,6 +59,7 @@ namespace NerdStore.Vendas.Data
                 property.SetColumnType("varchar(100)");
             }
 
+            // Ignore é para ignorar o Event pois ele não deve ser persistido na base
             modelBuilder.Ignore<Event>();
 
             // Vai buscar todas as entidades e seus mappings via "reflection" apenas um vez
@@ -64,6 +70,12 @@ namespace NerdStore.Vendas.Data
 
             modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1000).IncrementsBy(1);
             base.OnModelCreating(modelBuilder);
+            
+            // modelBuilder.Entity<Voucher>()
+            //     .HasMany<Pedido>(voucher => voucher.Pedidos)
+            //     .WithOne(pedido => pedido.Voucher)
+            //     .HasForeignKey(route => route.VoucherId)
+            //     .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

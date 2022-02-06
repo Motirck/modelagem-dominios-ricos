@@ -1,4 +1,5 @@
-﻿using NerdStore.Core.DomainObjects;
+﻿using System.Diagnostics.CodeAnalysis;
+using NerdStore.Core.DomainObjects;
 
 namespace NerdStore.Vendas.Domain
 {
@@ -6,6 +7,7 @@ namespace NerdStore.Vendas.Domain
     {
         public int Codigo { get; private set; }
         public Guid ClienteId { get; private set; }
+        [AllowNull]
         public Guid? VoucherId { get; private set; }
         public bool VoucherUtilizado { get; private set; }
         public decimal Desconto { get; private set; }
