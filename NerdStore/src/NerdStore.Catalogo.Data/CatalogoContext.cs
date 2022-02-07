@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NerdStore.Catalogo.Domain;
 using NerdStore.Core.Data;
+using NerdStore.Core.Messages;
 
 namespace NerdStore.Catalogo.Data
 {
@@ -24,6 +25,9 @@ namespace NerdStore.Catalogo.Data
             {
                 property.SetColumnType("varchar(100)");
             }
+            
+            // Ignore é para ignorar o Event pois ele não deve ser persistido na base
+            modelBuilder.Ignore<Event>();
 
             // Vai buscar todas as entidades e seus mappings via "reflection" apenas um vez
             // e irá configrar para que siga as configurações feitas nos mappings

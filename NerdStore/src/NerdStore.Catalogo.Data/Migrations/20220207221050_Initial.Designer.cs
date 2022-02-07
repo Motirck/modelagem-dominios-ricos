@@ -12,14 +12,14 @@ using NerdStore.Catalogo.Data;
 namespace NerdStore.Catalogo.Data.Migrations
 {
     [DbContext(typeof(CatalogoContext))]
-    [Migration("20211226205111_Initial")]
+    [Migration("20220207221050_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
