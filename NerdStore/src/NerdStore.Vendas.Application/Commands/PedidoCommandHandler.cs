@@ -32,7 +32,7 @@ public class PedidoCommandHandler : IRequestHandler<AdicionarItemPedidoCommand, 
             pedido.AdicionarItem(pedidoItem);
 
             _pedidoRepository.Adicionar(pedido);
-            pedido.AdicionarEvento(new PedidoRascunhoIniciadoEvent(message.ClienteId, message.ProdutoId));
+            pedido.AdicionarEvento(new PedidoRascunhoIniciadoEvent(message.ClienteId, pedido.Id));
         }
         else
         {
