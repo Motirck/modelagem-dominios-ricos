@@ -39,10 +39,12 @@ namespace NerdStore.Vendas.Data
                 }
             }
 
-            /// O this abaixo é o VendasContext
-            await _mediatorHandler.PublicarEventos(this);
+            var sucesso = await base.SaveChangesAsync() > 0;
             
-            return await base.SaveChangesAsync() > 0;
+            /// O this abaixo é o VendasContext
+            if(sucesso) await _mediatorHandler.PublicarEventos(this);
+
+            return sucesso;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -70,12 +72,6 @@ namespace NerdStore.Vendas.Data
 
             modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1000).IncrementsBy(1);
             base.OnModelCreating(modelBuilder);
-            
-            // modelBuilder.Entity<Voucher>()
-            //     .HasMany<Pedido>(voucher => voucher.Pedidos)
-            //     .WithOne(pedido => pedido.Voucher)
-            //     .HasForeignKey(route => route.VoucherId)
-            //     .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
