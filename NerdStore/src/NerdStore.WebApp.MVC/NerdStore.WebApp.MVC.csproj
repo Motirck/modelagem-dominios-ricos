@@ -29,4 +29,8 @@
     <ProjectReference Include="..\NerdStore.Vendas.Data\NerdStore.Vendas.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Shared\Components\Cart\Default.cshtml" />
+  </ItemGroup>
+
 </Project>
