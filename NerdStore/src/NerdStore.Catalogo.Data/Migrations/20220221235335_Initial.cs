@@ -35,9 +35,9 @@ namespace NerdStore.Catalogo.Data.Migrations
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Imagem = table.Column<string>(type: "varchar(250)", nullable: false),
                     QuantidadeEstoque = table.Column<int>(type: "int", nullable: false),
-                    Altura = table.Column<int>(type: "int", nullable: false),
-                    Largura = table.Column<int>(type: "int", nullable: false),
-                    Profundidade = table.Column<int>(type: "int", nullable: false)
+                    Altura = table.Column<int>(type: "int", nullable: true),
+                    Largura = table.Column<int>(type: "int", nullable: true),
+                    Profundidade = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

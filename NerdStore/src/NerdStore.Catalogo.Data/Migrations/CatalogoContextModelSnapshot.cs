@@ -115,8 +115,7 @@ namespace NerdStore.Catalogo.Data.Migrations
 
                     b.Navigation("Categoria");
 
-                    b.Navigation("Dimensoes")
-                        .IsRequired();
+                    b.Navigation("Dimensoes");
                 });
 
             modelBuilder.Entity("NerdStore.Catalogo.Domain.Categoria", b =>

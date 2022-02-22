@@ -52,7 +52,6 @@ namespace NerdStore.Vendas.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("VoucherId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("VoucherUtilizado")
@@ -140,8 +139,7 @@ namespace NerdStore.Vendas.Data.Migrations
                 {
                     b.HasOne("NerdStore.Vendas.Domain.Voucher", "Voucher")
                         .WithMany("Pedidos")
-                        .HasForeignKey("VoucherId")
-                        .IsRequired();
+                        .HasForeignKey("VoucherId");
 
                     b.Navigation("Voucher");
                 });
