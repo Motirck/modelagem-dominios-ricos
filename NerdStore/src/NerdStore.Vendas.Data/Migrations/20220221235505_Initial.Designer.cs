@@ -12,7 +12,7 @@ using NerdStore.Vendas.Data;
 namespace NerdStore.Vendas.Data.Migrations
 {
     [DbContext(typeof(VendasContext))]
-    [Migration("20220207220958_Initial")]
+    [Migration("20220221235505_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,6 @@ namespace NerdStore.Vendas.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("VoucherId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("VoucherUtilizado")
@@ -142,8 +141,7 @@ namespace NerdStore.Vendas.Data.Migrations
                 {
                     b.HasOne("NerdStore.Vendas.Domain.Voucher", "Voucher")
                         .WithMany("Pedidos")
-                        .HasForeignKey("VoucherId")
-                        .IsRequired();
+                        .HasForeignKey("VoucherId");
 
                     b.Navigation("Voucher");
                 });
