@@ -1,5 +1,7 @@
 using MediatR;
 using NerdStore.Core.Communication.Mediator;
+using NerdStore.Core.DomainObjects.Dtos;
+using NerdStore.Core.Entensions;
 using NerdStore.Core.Messages;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Vendas.Application.Events;
@@ -11,7 +13,8 @@ public class PedidoCommandHandler :
     IRequestHandler<AdicionarItemPedidoCommand, bool>,
     IRequestHandler<AtualizarItemPedidoCommand, bool>,
     IRequestHandler<RemoverItemPedidoCommand, bool>,
-    IRequestHandler<AplicarVoucherPedidoCommand, bool>
+    IRequestHandler<AplicarVoucherPedidoCommand, bool>,
+    IRequestHandler<IniciarPedidoCommand, bool>
 {
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IMediatorHandler _mediatorHandler;
@@ -157,6 +160,23 @@ public class PedidoCommandHandler :
 
         _pedidoRepository.Atualizar(pedido);
 
+        return await _pedidoRepository.UnitOfWork.Commit();
+    }
+
+    public async Task<bool> Handle(IniciarPedidoCommand message, CancellationToken cancellationToken)
+    {
+        if (!ValidarComando(message)) return false;
+
+        var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
+        pedido.IniciarPedido();
+
+        var itensList = new List<Item>();
+        pedido.PedidoItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+        var listaProdutosPedido = new ListaProdutosPedidoDto { PedidoId = pedido.Id, Itens = itensList };
+
+        pedido.AdicionarEvento(new PedidoIniciadoEvent(pedido.Id, pedido.ClienteId, listaProdutosPedido, pedido.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+
+        _pedidoRepository.Atualizar(pedido);
         return await _pedidoRepository.UnitOfWork.Commit();
     }
 
