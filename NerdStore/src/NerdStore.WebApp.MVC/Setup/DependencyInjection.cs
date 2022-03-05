@@ -5,9 +5,11 @@ using NerdStore.Catalogo.Data.Repository;
 using NerdStore.Catalogo.Domain;
 using NerdStore.Catalogo.Domain.Events;
 using NerdStore.Core.Communication.Mediator;
+using NerdStore.Core.Messages.CommonMessages.IntegrationEvents;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Pagamentos.AntiCorruption;
 using NerdStore.Pagamentos.Business;
+using NerdStore.Pagamentos.Business.Events;
 using NerdStore.Pagamentos.Data;
 using NerdStore.Pagamentos.Data.Repository;
 using NerdStore.Vendas.Application.Commands;
@@ -61,6 +63,10 @@ namespace NerdStore.WebApp.MVC.Setup
             services.AddScoped<IPayPalGateway, PayPalGateway>();
             services.AddScoped<IConfigurationManager, ConfigurationManager>();
             services.AddScoped<PagamentoContext>();
+
+            /// Events
+            services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();
+
         }
     }
 }
