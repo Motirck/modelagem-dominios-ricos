@@ -4,7 +4,7 @@ using NerdStore.Core.DomainObjects;
 
 namespace NerdStore.Vendas.Domain
 {
-    public class Pedido : Entity, IAgregateRoot
+    public class Pedido : Entity, IAggregateRoot
     {
         public int Codigo { get; private set; }
         public Guid ClienteId { get; private set; }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NerdStore.Catalogo.Application.AutoMapper;
 using NerdStore.Catalogo.Data;
+using NerdStore.Pagamentos.Data;
 using NerdStore.Vendas.Data;
 using NerdStore.WebApp.MVC.Data;
 using NerdStore.WebApp.MVC.Setup;
@@ -20,8 +21,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services
-    .AddDbContext<CatalogoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")))
-    .AddDbContext<VendasContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .AddDbContext<CatalogoContext>(options => options.UseSqlServer(connectionString))
+    .AddDbContext<VendasContext>(options => options.UseSqlServer(connectionString))
+    .AddDbContext<PagamentoContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddAutoMapper(typeof(DomainToDtoMappingProfile), typeof(DtoToDomainMappingProfile));
 
