@@ -12,14 +12,14 @@ using NerdStore.Pagamentos.Data;
 namespace NerdStore.Pagamentos.Data.Migrations
 {
     [DbContext(typeof(PagamentoContext))]
-    [Migration("20220305141024_Pagamentos")]
+    [Migration("20220307230914_Pagamentos")]
     partial class Pagamentos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -50,7 +50,6 @@ namespace NerdStore.Pagamentos.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<decimal>("Valor")
@@ -99,8 +98,7 @@ namespace NerdStore.Pagamentos.Data.Migrations
 
             modelBuilder.Entity("NerdStore.Pagamentos.Business.Pagamento", b =>
                 {
-                    b.Navigation("Transacao")
-                        .IsRequired();
+                    b.Navigation("Transacao");
                 });
 #pragma warning restore 612, 618
         }
