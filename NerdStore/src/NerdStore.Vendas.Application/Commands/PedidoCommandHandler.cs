@@ -10,7 +10,7 @@ using NerdStore.Vendas.Domain;
 
 namespace NerdStore.Vendas.Application.Commands;
 
-public class PedidoCommandHandler : 
+public class PedidoCommandHandler :
     IRequestHandler<AdicionarItemPedidoCommand, bool>,
     IRequestHandler<AtualizarItemPedidoCommand, bool>,
     IRequestHandler<RemoverItemPedidoCommand, bool>,
@@ -19,6 +19,7 @@ public class PedidoCommandHandler :
     IRequestHandler<FinalizarPedidoCommand, bool>,
     IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>,
     IRequestHandler<CancelarProcessamentoPedidoCommand, bool>
+
 {
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IMediatorHandler _mediatorHandler;
@@ -58,12 +59,9 @@ public class PedidoCommandHandler :
             {
                 _pedidoRepository.AdicionarItem(pedidoItem);
             }
-            
-            pedido.AdicionarEvento(new PedidoAtualizadoEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal));
         }
-        
-        pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
 
+        pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id, message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
         return await _pedidoRepository.UnitOfWork.Commit();
     }
 
@@ -88,8 +86,6 @@ public class PedidoCommandHandler :
         }
 
         pedido.AtualizarUnidades(pedidoItem, message.Quantidade);
-
-        pedido.AdicionarEvento(new PedidoAtualizadoEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal));
         pedido.AdicionarEvento(new PedidoProdutoAtualizadoEvent(message.ClienteId, pedido.Id, message.ProdutoId, message.Quantidade));
 
         _pedidoRepository.AtualizarItem(pedidoItem);
@@ -119,7 +115,6 @@ public class PedidoCommandHandler :
         }
 
         pedido.RemoverItem(pedidoItem);
-        pedido.AdicionarEvento(new PedidoAtualizadoEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal));
         pedido.AdicionarEvento(new PedidoProdutoRemovidoEvent(message.ClienteId, pedido.Id, message.ProdutoId));
 
         _pedidoRepository.RemoverItem(pedidoItem);
@@ -159,7 +154,6 @@ public class PedidoCommandHandler :
             return false;
         }
 
-        pedido.AdicionarEvento(new PedidoAtualizadoEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal));
         pedido.AdicionarEvento(new VoucherAplicadoPedidoEvent(message.ClienteId, pedido.Id, voucher.Id));
 
         _pedidoRepository.Atualizar(pedido);

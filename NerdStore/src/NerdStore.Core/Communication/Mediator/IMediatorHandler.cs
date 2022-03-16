@@ -1,4 +1,5 @@
 ﻿using NerdStore.Core.Messages;
+using NerdStore.Core.Messages.CommonMessages.DomainEvents;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 
 namespace NerdStore.Core.Communication.Mediator
@@ -28,6 +29,14 @@ namespace NerdStore.Core.Communication.Mediator
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification;
+
+        /// <summary>
+        /// O evento genérico "T" precisa ser filho de "DomainEvent"
+        /// </summary>
+        /// <param name="notificacao"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Task PublicarDomainEvent<T>(T notificacao) where T : DomainEvent;
 
     }
 }
