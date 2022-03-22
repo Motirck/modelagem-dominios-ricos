@@ -64,6 +64,7 @@ public class PedidoQueries : IPedidoQueries
         {
             pedidosDto.Add(new PedidoDto
             {
+                Id = pedido.Id,
                 ValorTotal = pedido.ValorTotal,
                 PedidoStatus = (int)pedido.PedidoStatus,
                 Codigo = pedido.Codigo,
