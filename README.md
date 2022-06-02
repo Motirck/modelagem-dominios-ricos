@@ -26,3 +26,7 @@ Isso irá ajudar a diferenciar as entidades que são raízes de agregação das 
 ### Objetos de Valor (Value Object)
 
 - Dimensoes
+
+## Créditos
+
+Projeto criado do zero por mim Motirck, com base no curso Dominando os Testes de Software oferecido pela plataforma [Desenvolvedor.io](https://desenvolvedor.io/). Super recomendo, deem uma olhada. 🚀
